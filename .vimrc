@@ -1,5 +1,4 @@
-" Make Vim usable
-inoremap jk <Esc>
+inoremap jk <Esc> " Make Vim usable
 
 filetype indent plugin on " filetype specific settings
 set tabstop=2 shiftwidth=2 expandtab " No more tabs
