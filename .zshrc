@@ -1,4 +1,4 @@
-PATH="/usr/share/texlive:/usr/home/.local/bin/:$PATH"
+PATH="/usr/local/texlive/2020/bin/x86_64-linux:$PATH"
 
 # Base16 Shell
 BASE16_SHELL="$HOME/.config/base16-shell/"
@@ -82,7 +82,8 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
-# export MANPATH="/usr/local/man:$MANPATH"
+export MANPATH="/usr/local/texlive/2020/texmf-dist/doc/man:/usr/local/man:$MANPATH"
+export INFOPATH="/usr/local/texlive/2020/texmf-dist/doc/info:$INFOPATH"
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
@@ -106,6 +107,8 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias v=nvim
+alias web="aws s3 sync /home/riley/rjackson2000.com s3://rjackson2000.com"
+alias psudo='sudo env PATH="$PATH"'
 
 neofetch --logo --ascii_distro ubuntu_small
 ls

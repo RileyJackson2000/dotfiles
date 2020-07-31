@@ -1,32 +1,27 @@
-inoremap jk <Esc> " Make Vim usable
+" Make Vim usable
+inoremap jk <Esc>
 
 filetype indent plugin on " filetype specific settings
+syntax enable
 set tabstop=2 shiftwidth=2 expandtab " No more tabs
 set hidden " Edit several buffers at once
-set ruler " see mouse position
 set whichwrap+=<,>,h,l,[,] " Horizontal movement wraps
 set backspace=indent,eol,start " Backspace works
 set cursorline " See cursor on status
-set confirm " save dialogue on failed save
-set visualbell " flash screen on error
-set showcmd " show last command in bottom
-set wildmenu " autocomplete in command moce
-set autoread " update external file changes
-set ignorecase " ignore case for search
-set smartcase " unless theres capitols
-set mouse=a " mouse is usable
+set confirm " Save dialogue on failed save
+set visualbell " Flash screen on error
+set ignorecase " Ignore case for search
+set smartcase " Unless theres capitols
+set mouse=a " Mouse is usable
+set guicursor= " Get Vim cursor
 
 " Hybrid line numbers
-:set number relativenumber
-
-:augroup numbertoggle
-:  autocmd!
-:  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
-:  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
-:augroup END
-
-" Get Vim cursor
-set guicursor=
+set number relativenumber
+augroup numbertoggle
+  autocmd!
+  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
+  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
+augroup END
 
 " Toggle folding easier
 nnoremap zz za
@@ -42,9 +37,6 @@ nnoremap gk k
 vnoremap gj j
 vnoremap gk k
 
-nnoremap B ^
-nnoremap E $
-
 " @TODO set it so that multiplied j and k use gj and gk so that hybrid lines work
 
 " In case shift lingers
@@ -57,11 +49,9 @@ nnoremap E $
 map <C-n> :bnext<CR>
 map <C-p> :bprevious<CR>
 
-" Fix backspace
-:set backspace=indent,eol,start
-
 " Spelling
-:setlocal spell spelllang=en
+setlocal spell spelllang=en
+syntax spell toplevel
 
 call plug#begin()
 
@@ -71,8 +61,9 @@ Plug 'vim-latex/vim-latex' " Latex overhaul
 Plug 'vim-airline/vim-airline' " Status bar
 Plug 'vim-airline/vim-airline-themes' " Themes
 Plug 'tpope/vim-commentary' " Commenting
-Plug 'ludovicchabant/vim-gutentags' " Code tags
+" Plug 'ludovicchabant/vim-gutentags' " Code tags
 Plug 'majutsushi/tagbar' " Browse tags
+Plug 'alvan/vim-closetag'
 " @TODO fuzzy search, git, c++, etc..
 
 call plug#end()
@@ -134,6 +125,9 @@ let g:airline#extensions#whitespace#enabled = 0
 
 " --- Tagbar ---
 nnoremap <Leader>f :TagbarToggle<CR>
+
+" --- Vim-closetags ---
+let g:closetag_filetypes = 'html,xhtml,phtml,aspvbs'
 
 " --- C# stuff ---
 autocmd BufEnter *.ASP :setlocal filetype=aspvbs
