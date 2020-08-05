@@ -110,7 +110,7 @@ alias v=nvim
 alias web="aws s3 sync /home/riley/rjackson2000.com s3://rjackson2000.com"
 alias psudo='sudo env PATH="$PATH"'
 alias ff='fzf -q ""'
-alias cat='bat'
+alias ls='exa'
 
 # zsh-bd
 . $HOME/.zsh/plugins/bd/bd.zsh

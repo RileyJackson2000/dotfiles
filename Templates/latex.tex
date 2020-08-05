@@ -1,0 +1,218 @@
+\documentclass[a4paper]{report}
+
+\usepackage[stretch=10]{microtype}
+\usepackage[a4paper, margin=1in]{geometry}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{mathtools}
+\usepackage{nicefrac}
+\usepackage[short, nocomma]{optidef}
+
+% Define amsthm environments
+
+\theoremstyle{plain}
+\newtheorem*{thm}{Theorem}
+\newtheorem*{lem}{Lemma}
+\newtheorem*{prop}{Proposition}
+\newtheorem*{cor}{Corollary}
+\newtheorem*{claim}{Claim}
+
+\theoremstyle{definition}
+\newtheorem*{defn}{Definition}
+\newtheorem*{conj}{Conjecture}
+\newtheorem*{exmp}{Example}
+
+\theoremstyle{remark}
+\newtheorem*{rem}{Remark}
+\newtheorem*{note}{Note}
+\newtheorem*{case}{Case}
+
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\Int}{int}
+\DeclareMathOperator{\Null}{null}
+\DeclareMathOperator{\Range}{Range}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\supp}{supp}
+\DeclareMathOperator{\Span}{span}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\Diag}{Diag}
+\DeclareMathOperator{\rank}{rank}
+
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}%
+\DeclarePairedDelimiter\norm{\lVert}{\rVert}%
+\DeclarePairedDelimiter\inn{\langle}{\rangle}%
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+% Swap the definition of \abs* and \norm*, so that \abs
+% and \norm resizes the size of the brackets, and the 
+% starred version does not.
+\makeatletter
+\let\oldabs\abs
+\def\abs{\@ifstar{\oldabs}{\oldabs*}}
+%
+\let\oldnorm\norm
+\def\norm{\@ifstar{\oldnorm}{\oldnorm*}}
+%
+\let\oldinn\inn
+\def\inn{\@ifstar{\oldinn}{\oldinn*}}
+\makeatother
+
+% blackboard bold letters
+\newcommand{\bA}{\mathbb{A}}
+\newcommand{\bB}{\mathbb{B}}
+\newcommand{\bC}{\mathbb{C}}
+\newcommand{\bD}{\mathbb{D}}
+\newcommand{\bE}{\mathbb{E}}
+\newcommand{\bF}{\mathbb{F}}
+\newcommand{\bG}{\mathbb{G}}
+\newcommand{\bH}{\mathbb{H}}
+\newcommand{\bI}{\mathbb{I}}
+\newcommand{\bJ}{\mathbb{J}}
+\newcommand{\bK}{\mathbb{K}}
+\newcommand{\bL}{\mathbb{L}}
+\newcommand{\bM}{\mathbb{M}}
+\newcommand{\bN}{\mathbb{N}}
+\newcommand{\bO}{\mathbb{O}}
+\newcommand{\bP}{\mathbb{P}}
+\newcommand{\bQ}{\mathbb{Q}}
+\newcommand{\bR}{\mathbb{R}}
+\newcommand{\bS}{\mathbb{S}}
+\newcommand{\bT}{\mathbb{T}}
+\newcommand{\bU}{\mathbb{U}}
+\newcommand{\bV}{\mathbb{V}}
+\newcommand{\bW}{\mathbb{W}}
+\newcommand{\bX}{\mathbb{X}}
+\newcommand{\bY}{\mathbb{Y}}
+\newcommand{\bZ}{\mathbb{Z}}
+
+% calligraphic letters
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cG}{\mathcal{G}}
+\newcommand{\cH}{\mathcal{H}}
+\newcommand{\cI}{\mathcal{I}}
+\newcommand{\cJ}{\mathcal{J}}
+\newcommand{\cK}{\mathcal{K}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\cN}{\mathcal{N}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cQ}{\mathcal{Q}}
+\newcommand{\cR}{\mathcal{R}}
+\newcommand{\cS}{\mathcal{S}}
+\newcommand{\cT}{\mathcal{T}}
+\newcommand{\cU}{\mathcal{U}}
+\newcommand{\cV}{\mathcal{V}}
+\newcommand{\cW}{\mathcal{W}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cY}{\mathcal{Y}}
+\newcommand{\cZ}{\mathcal{Z}}
+
+% scribe letters
+\newcommand{\sA}{\mathscr{A}}
+\newcommand{\sB}{\mathscr{B}}
+\newcommand{\sC}{\mathscr{C}}
+\newcommand{\sD}{\mathscr{D}}
+\newcommand{\sE}{\mathscr{E}}
+\newcommand{\sF}{\mathscr{F}}
+\newcommand{\sG}{\mathscr{G}}
+\newcommand{\sH}{\mathscr{H}}
+\newcommand{\sI}{\mathscr{I}}
+\newcommand{\sJ}{\mathscr{J}}
+\newcommand{\sK}{\mathscr{K}}
+\newcommand{\sL}{\mathscr{L}}
+\newcommand{\sM}{\mathscr{M}}
+\newcommand{\sN}{\mathscr{N}}
+\newcommand{\sO}{\mathscr{O}}
+\newcommand{\sP}{\mathscr{P}}
+\newcommand{\sQ}{\mathscr{Q}}
+\newcommand{\sR}{\mathscr{R}}
+\newcommand{\sS}{\mathscr{S}}
+\newcommand{\sT}{\mathscr{T}}
+\newcommand{\sU}{\mathscr{U}}
+\newcommand{\sV}{\mathscr{V}}
+\newcommand{\sW}{\mathscr{W}}
+\newcommand{\sX}{\mathscr{X}}
+\newcommand{\sY}{\mathscr{Y}}
+\newcommand{\sZ}{\mathscr{Z}}
+
+% vector letters
+\newcommand{\vA}{\vec{a}}
+\newcommand{\vB}{\vec{b}}
+\newcommand{\vC}{\vec{c}}
+\newcommand{\vD}{\vec{d}}
+\newcommand{\vE}{\vec{e}}
+\newcommand{\vF}{\vec{f}}
+\newcommand{\vG}{\vec{g}}
+\newcommand{\vH}{\vec{h}}
+\newcommand{\vI}{\vec{i}}
+\newcommand{\vJ}{\vec{j}}
+\newcommand{\vK}{\vec{k}}
+\newcommand{\vL}{\vec{l}}
+\newcommand{\vM}{\vec{m}}
+\newcommand{\vN}{\vec{n}}
+\newcommand{\vO}{\vec{o}}
+\newcommand{\vP}{\vec{p}}
+\newcommand{\vQ}{\vec{q}}
+\newcommand{\vR}{\vec{r}}
+\newcommand{\vS}{\vec{s}}
+\newcommand{\vT}{\vec{t}}
+\newcommand{\vU}{\vec{u}}
+\newcommand{\vV}{\vec{v}}
+\newcommand{\vW}{\vec{w}}
+\newcommand{\vX}{\vec{x}}
+\newcommand{\vY}{\vec{y}}
+\newcommand{\vZ}{\vec{z}}
+
+\DeclareMathAlphabet{\mymathbb}{U}{bbold}{m}{n}
+
+\newcommand{\vzero}{\mymathbb{0}}
+\newcommand{\vone}{\mymathbb{1}}
+\newcommand{\vtwo}{\mymathbb{2}}
+\newcommand{\vthree}{\mymathbb{3}}
+\newcommand{\vfour}{\mymathbb{4}}
+\newcommand{\vfive}{\mymathbb{5}}
+\newcommand{\vsix}{\mymathbb{6}}
+\newcommand{\vseven}{\mymathbb{7}}
+\newcommand{\veight}{\mymathbb{8}}
+\newcommand{\vnine}{\mymathbb{9}}
+
+% common text in equations
+\newcommand{\AND}{\text{ and }}
+\newcommand{\FOR}{\text{ for }}
+\newcommand{\FORAL}{\text{ for all }}
+\newcommand{\IF}{\text{ if }}
+\newcommand{\IFF}{\text{ if and only if }}
+\newcommand{\OR}{\text{ or }}
+\newcommand{\ST}{\text{ such that }}
+\newcommand{\LHS}{\text{LHS}}
+\newcommand{\RHS}{\text{RHS}}
+\newcommand{\EVEN}{\text{ even }}
+\newcommand{\ODD}{\text{ odd }}
+\newcommand{\WHERE}{\text{ where }}
+\newcommand{\SINCE}{\text{ since }}
+\newcommand{\QAND}{\quad\text{ and }\quad}
+\newcommand{\QFOR}{\quad\text{ for }\quad}
+\newcommand{\QFORAL}{\quad\text{ for all }\quad}
+\newcommand{\QIF}{\quad\text{ if }\quad}
+\newcommand{\QIFF}{\quad\text{ if and only if }\quad}
+\newcommand{\QOR}{\quad\text{ or }\quad}
+\newcommand{\QST}{\quad\text{ st }\quad}
+\newcommand{\QLHS}{\quad\text{ LHS }\quad}
+\newcommand{\QRHS}{\quad\text{ RHS }\quad}
+\newcommand{\QEVEN}{\quad\text{ even }\quad}
+\newcommand{\QODD}{\quad\text{ odd }\quad}
+\newcommand{\QWHERE}{\quad\text{ where }\quad}
+\newcommand{\QSINCE}{\quad\text{ since }\quad}
+
+\newcommand{\db}{\text{d}}
