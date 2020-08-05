@@ -1,4 +1,4 @@
-PATH="/usr/local/texlive/2020/bin/x86_64-linux:$PATH"
+PATH="/home/riley/.cargo/bin:/usr/local/texlive/2020/bin/x86_64-linux:$PATH"
 
 # Base16 Shell
 BASE16_SHELL="$HOME/.config/base16-shell/"
@@ -76,7 +76,7 @@ ZSH_THEME="agnoster"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(git colored-man-pages)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -109,10 +109,23 @@ export INFOPATH="/usr/local/texlive/2020/texmf-dist/doc/info:$INFOPATH"
 alias v=nvim
 alias web="aws s3 sync /home/riley/rjackson2000.com s3://rjackson2000.com"
 alias psudo='sudo env PATH="$PATH"'
-
-neofetch --logo --ascii_distro ubuntu_small
-ls
+alias ff='fzf -q ""'
+alias cat='bat'
 
 # zsh-bd
 . $HOME/.zsh/plugins/bd/bd.zsh
 alias dotfiles="/usr/bin/git --git-dir=$HOME/.dotfiles.git/ --work-tree=$HOME"
+
+# fzf stuff
+
+source /usr/share/doc/fzf/examples/completion.zsh
+
+# cdf - cd into the directory of the selected file
+cdf() {
+   local file
+   local dir
+   file=$(fzf +m -q "$1") && dir=$(dirname "$file") && cd "$dir"
+}
+
+neofetch --logo --ascii_distro ubuntu_small
+exa

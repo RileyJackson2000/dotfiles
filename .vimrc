@@ -14,6 +14,12 @@ set ignorecase " Ignore case for search
 set smartcase " Unless theres capitols
 set mouse=a " Mouse is usable
 set guicursor= " Get Vim cursor
+set splitbelow "new windows added below
+set splitright "new windows added to the right
+set lazyredraw "better performance for macros
+set shiftround "nicer indenting
+set linebreak "visual line breaking
+set nojoinspaces "no more double space on 'J'
 
 " Hybrid line numbers
 set number relativenumber
@@ -30,6 +36,8 @@ vnoremap zz za
 " Better movement
 nnoremap j gj
 nnoremap k gk
+" nnoremap j @='gj'<CR>
+" nnoremap k @='gk'<CR>
 vnoremap j gj
 vnoremap k gk
 nnoremap gj j
@@ -64,6 +72,9 @@ Plug 'tpope/vim-commentary' " Commenting
 " Plug 'ludovicchabant/vim-gutentags' " Code tags
 Plug 'majutsushi/tagbar' " Browse tags
 Plug 'alvan/vim-closetag'
+Plug 'mhinz/vim-signify' " Git gutter basically
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
 " @TODO fuzzy search, git, c++, etc..
 
 call plug#end()
