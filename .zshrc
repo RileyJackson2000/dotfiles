@@ -1,9 +1,3 @@
-PATH="/home/riley/.cargo/bin:/usr/local/texlive/2020/bin/x86_64-linux:$PATH"
-
-# Base16 Shell
-BASE16_SHELL="$HOME/.config/base16-shell/"
-[ -n "$PS1" ] &&  [ -s "$BASE16_SHELL/profile_helper.sh" ] &&  eval "$("$BASE16_SHELL/profile_helper.sh")"
-
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -51,7 +45,7 @@ ZSH_THEME="agnoster"
 # ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
+COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
@@ -80,18 +74,27 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
+
+# Updating PATH
+PATH="/home/riley/.cargo/bin:/usr/local/texlive/2020/bin/x86_64-linux:$PATH"
+
+# latex PATH info
+
 export MANPATH="/usr/local/texlive/2020/texmf-dist/doc/man:/usr/local/man:$MANPATH"
 export INFOPATH="/usr/local/texlive/2020/texmf-dist/doc/info:$INFOPATH"
+
+# Base16 Shell
+BASE16_SHELL="$HOME/.config/base16-shell/"
+[ -n "$PS1" ] &&  [ -s "$BASE16_SHELL/profile_helper.sh" ] &&  eval "$("$BASE16_SHELL/profile_helper.sh")"
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='vim'
+else
+  export EDITOR='mvim'
+fi
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -104,19 +107,22 @@ export INFOPATH="/usr/local/texlive/2020/texmf-dist/doc/info:$INFOPATH"
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
 alias v=nvim
 alias web="aws s3 sync /home/riley/rjackson2000.com s3://rjackson2000.com"
 alias psudo='sudo env PATH="$PATH"'
 alias ff='fzf -q ""'
 alias ls='exa'
+alias python='python3.8'
 
 # zsh-bd
 . $HOME/.zsh/plugins/bd/bd.zsh
+
+# dotfiles bare repo
 alias dotfiles="/usr/bin/git --git-dir=$HOME/.dotfiles.git/ --work-tree=$HOME"
 
 # fzf stuff
-
-source /usr/share/doc/fzf/examples/completion.zsh
+source /usr/share/doc/fzf/examples/completion.zsh #fixes ** completion
 
 # cdf - cd into the directory of the selected file
 cdf() {
@@ -124,6 +130,8 @@ cdf() {
    local dir
    file=$(fzf +m -q "$1") && dir=$(dirname "$file") && cd "$dir"
 }
+
+# Shell init stuff
 
 neofetch --logo --ascii_distro ubuntu_small
 exa

@@ -9,7 +9,7 @@
 \usepackage{amsfonts}
 \usepackage{mathtools}
 \usepackage{nicefrac}
-\usepackage{hyperref}
+\usepackage[hidelinks]{hyperref}
 \usepackage[short, nocomma]{optidef}
 
 \usepackage{xpatch}
@@ -71,6 +71,9 @@
 \let\oldinn\inn
 \def\inn{\@ifstar{\oldinn}{\oldinn*}}
 \makeatother
+
+% fix omicron
+\newcommand\omicron{o}
 
 % blackboard bold letters
 \newcommand{\bA}{\mathbb{A}}
