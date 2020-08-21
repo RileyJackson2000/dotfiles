@@ -11,7 +11,7 @@
 
 call plug#begin()
 
-"" File exploration
+"" File exploration @TOOD switch to fern.vim?
 Plug 'preservim/nerdtree'
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'mhinz/vim-signify'
@@ -19,6 +19,7 @@ Plug 'mhinz/vim-signify'
 "" Colors
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'arcticicestudio/nord-vim'
+Plug 'morhetz/gruvbox'
 
 "" Status bar
 Plug 'vim-airline/vim-airline'
@@ -44,16 +45,20 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
 
 "" Completion/linting
-Plug 'dense-analysis/ale'
+" Plug 'dense-analysis/ale'
 Plug 'Yggdroot/indentLine'
 Plug 'dhruvasagar/vim-zoom'
 
 "" Languages
 "" Latex
 Plug 'vim-latex/vim-latex'
-
 "" HTML
 " Plug 'alvan/vim-clometag'
+"" Python
+Plug 'hdima/python-syntax', {'for': 'python'}
+"" C++
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'jackguo380/vim-lsp-cxx-highlight'
 
 call plug#end()
 
@@ -66,7 +71,14 @@ call plug#end()
 ""                                          
 ""config
 
-set conceallevel=1
+set shortmess+=c
+
+"" No Backup
+set nobackup
+set nowritebackup
+
+"" Less latency
+set updatetime=300
 
 filetype indent plugin on
 syntax enable 
@@ -83,7 +95,7 @@ set backspace=indent,eol,start " Backspace works
 set tabstop=2
 set softtabstop=0
 set shiftwidth=2
-" set expandtab
+set expandtab
 
 "" Search
 set hlsearch
@@ -98,7 +110,6 @@ syntax spell toplevel
 "" Miscellaneous
 set hidden "How is this not a default???
 set whichwrap+=<,>,h,l,[,]
-set confirm
 set mouse=a
 set shiftround
 set nojoinspaces "J is cancer
@@ -128,7 +139,11 @@ set virtualedit+=block
 ""                                                
 ""visual
 
+"" More space for displaying messages
+set cmdheight=2
+
 "" Invisible chars
+set conceallevel=1
 set list
 set listchars=tab:\|\ ,extends:❯,precedes:❮,trail:·
 set showbreak=↪
@@ -146,6 +161,7 @@ augroup END
 
 "" Cursor
 set guicursor=
+set cursorline
 
 "" Title
 set title
@@ -162,13 +178,16 @@ set t_8b=^[[48;2;%lu;%lu;%lum  " Ditto
 set t_Co=255
 set t_ut=
 set termguicolors
-colorscheme nord
-let g:nord_bold_vertical_split_line = 1
+colorscheme gruvbox
+set background=dark
+" let g:nord_bold_vertical_split_line = 1
 
 "" Miscellaneous
+set signcolumn=yes
 set ruler
 set linebreak
 set visualbell
+set confirm
 set lazyredraw
 
 ""    __  __          _____  _____ _____ _   _  _____  _____ 
@@ -180,11 +199,21 @@ set lazyredraw
 ""                                                           
 ""mappings
 
+"" Fix bd with NERDTree
+cnoreabbrev bd bp<bar>sp<bar>bn<bar>bd<CR>
+
+"" Update cwd to that of current file
+nnoremap cdc :lcd %:p:h<CR>
+nnoremap cdh :lcd ~<CR>
+
+"" Website
+" nnoremap <leader>w :term<CR>iweb<CR><C-\><C-n>:bd!<CR> " This is broken
+
 "" Change split size
-nnoremap <Up>    :resize -2<CR>
-nnoremap <Down>  :resize +2<CR>
-nnoremap <Left>  :vertical resize -2<CR>
-nnoremap <Right> :vertical resize +2<CR>
+nnoremap <Up>    :resize +2<CR>
+nnoremap <Down>  :resize -2<CR>
+nnoremap <Left>  :vertical resize +2<CR>
+nnoremap <Right> :vertical resize -2<CR>
 
 "" Make vim usable
 inoremap jk <Esc>
@@ -253,6 +282,9 @@ nnoremap <leader>etl :e ~/Templates/latex.tex<CR>
 nnoremap <leader>ez :e ~/.zshrc<CR>
 nnoremap <leader>eb :e ~/.bashrc<CR>
 
+"" Source vimrc
+nnoremap <leader>ee :source ~/.vimrc<CR>
+
 "" Folding
 nnoremap <space> za
 vnoremap <space> za
@@ -266,6 +298,56 @@ vnoremap <space> za
 ""                                                                                   
 ""plugin config
 
+"" vim-lsp-cxx-highlight
+let g:lsp_cxx_hl_use_text_props = 1
+
+"" coc.nvim
+"" Use tab to complete
+" Use tab to trigger completion and navigate.
+inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : <SID>check_back_space() ? "\<TAB>" : coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+" ctrl-space to trigger completion.
+inoremap <silent><expr> <c-space> coc#refresh()
+"
+"" Use <CR> to confirm
+if exists('*complete_info')
+  inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+else
+  inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+endif
+
+"" K to check docs
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+"" Use `[g` and `]g` to navigate diagnostics
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+"" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+"" Highlight the symbol and its references when holding the cursor.
+" autocmd CursorHold * silent call CocActionAsync('highlight')
+
+"" Symbol renaming.
+nmap <leader>rn <Plug>(coc-rename)
+
+"" Formatting selected code.
+xmap <leader>cf  <Plug>(coc-format-selected)
+nmap <leader>cf  <Plug>(coc-format-selected)
+
 "" Zoom
 nmap <leader>m <Plug>(zoom-toggle)
 
@@ -274,12 +356,12 @@ let g:indentLine_char = "\|"
 let g:indentLine_faster = 1
 let g:indentLine_concealcursor='inc'
 let g:indentLine_first_char = "\|"
-let g:indentLine_showFirstIndentLevel = 1
+let g:indentLine_showFirstIndentLevel = 0
 let g:indentLine_bufTypeExclude = ['help', 'terminal']
 let g:indentLine_bufNameExclude = ['_.*', 'NERD_tree.*']
 
 "" Ultisnips
-let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsExpandTrigger="<C-N>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 let g:UltiSnipsEditSplit="vertical"
@@ -299,11 +381,15 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
 "" Close NERDTree if it's the only buffer remaining
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
+"" Open NERDTree if no files specified
+" autocmd StdinReadPre * let s:std_in=1
+" autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
 "" NERDTree File highlighting
-function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
- exec 'autocmd filetype nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
- exec 'autocmd filetype nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
-endfunction
+" function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
+"  exec 'autocmd filetype nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
+"  exec 'autocmd filetype nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
+" endfunction
 
 " call NERDTreeHighlightFile('pdf', 'green', 'none', 'green', '#151515')
 " call NERDTreeHighlightFile('pdf', 'yellow', 'none', 'yellow', '#151515')
@@ -331,10 +417,10 @@ let g:Tex_PromptedEnvironments = 'pmatrix,alignat*,gather*,align*,enumerate,item
 
 "" Vim-airline
 ""  @TODO need to fix this still - get it back to old rc file
-let g:airline_theme='nord'
+let g:airline_theme='gruvbox'
 let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#ale#enabled = 1
+" let g:airline#extensions#ale#enabled = 1
 let g:airline#extensions#tagbar#enabled = 1
 let g:airline#extensions#whitespace#enabled = 0
 let g:airline_skip_empty_sections = 1
@@ -342,6 +428,12 @@ let g:airline_powerline_fonts = 1
 
 "" Tagbar
 nnoremap <Leader>f :TagbarToggle<CR>
+
+"" Fast-Fold
+let g:fastfold_savehook=1
+let g:fastfold_minlines=0
+xnoremap iz :<c-u>FastFoldUpdate<cr><esc>:<c-u>normal! ]zv[z<cr>
+xnoremap az :<c-u>FastFoldUpdate<cr><esc>:<c-u>normal! ]zV[z<cr>
 
 "" fzf.vim
 
@@ -359,14 +451,16 @@ let g:closetag_filetypes = 'html,xhtml,phtml,aspvbs'
 
 "" Latex
 let g:tex_conceal=""
-let g:tex_no_error=1
+let g:tex_no_error=1 "Fixes underscores being highlighted
 
 "" C++
 
 "" Python
+let g:python_highlight_all = 1
 
 "" C#
 autocmd BufEnter *.ASP :setlocal filetype=aspvbs
+autocmd BufEnter *.cshtml :setlocal filetype=html
 
 ""     _____ ____  __  __ __  __          _   _ _____   _____ 
 ""    / ____/ __ \|  \/  |  \/  |   /\   | \ | |  __ \ / ____|
@@ -375,5 +469,5 @@ autocmd BufEnter *.ASP :setlocal filetype=aspvbs
 ""   | |___| |__| | |  | | |  | |/ ____ \| |\  | |__| |____) |
 ""    \_____\____/|_|  |_|_|  |_/_/    \_\_| \_|_____/|_____/ 
 ""                                                            
-""commands                                                            
+""commands
 command! FixWhitespace :%s/\s\+$//e
