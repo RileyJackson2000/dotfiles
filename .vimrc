@@ -44,12 +44,21 @@ Plug 'honza/vim-snippets'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
 
-"" Completion/linting
-" Plug 'dense-analysis/ale'
+"" Formatting
 Plug 'Yggdroot/indentLine'
+
+"" Miscellaneous
 Plug 'dhruvasagar/vim-zoom'
 
+"" Conveniance
+Plug 'jiangmiao/auto-pairs'
+" Plug 'tpope/vim-endwise'
+" Plug 'rstacruz/vim-closer'
+
 "" Languages
+"" JavaScript
+Plug 'yuezk/vim-js'
+Plug 'maxmellon/vim-jsx-pretty'
 "" Latex
 Plug 'vim-latex/vim-latex'
 "" HTML
@@ -57,8 +66,11 @@ Plug 'vim-latex/vim-latex'
 "" Python
 Plug 'hdima/python-syntax', {'for': 'python'}
 "" C++
+
+"" Completion/linting/highlighting
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'jackguo380/vim-lsp-cxx-highlight'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
 call plug#end()
 
@@ -108,6 +120,7 @@ setlocal spell spelllang=en
 syntax spell toplevel
 
 "" Miscellaneous
+set tildeop
 set hidden "How is this not a default???
 set whichwrap+=<,>,h,l,[,]
 set mouse=a
@@ -199,8 +212,8 @@ set lazyredraw
 ""                                                           
 ""mappings
 
-"" Fix bd with NERDTree
-cnoreabbrev bd bp<bar>sp<bar>bn<bar>bd<CR>
+"" Fix bd with NERDTree @TODO this still doesnt work, need to find something better
+" cnoreabbrev bd bp<bar>sp<bar>bn<bar>bd<CR>
 
 "" Update cwd to that of current file
 nnoremap cdc :lcd %:p:h<CR>
@@ -219,8 +232,8 @@ nnoremap <Right> :vertical resize -2<CR>
 inoremap jk <Esc>
 
 "" Tabs
-nnoremap <Tab> gt
-nnoremap <S-Tab> gT
+nnoremap <C-Tab> gt
+nnoremap <C-S-Tab> gT
 nnoremap <silent> <S-t> :tabnew<CR>
 
 "" Clear search
@@ -228,7 +241,8 @@ nnoremap <silent> <leader><space> :noh<cr>
 
 "" Terminal
 tnoremap jk <C-\><C-n>
-nnoremap <silent> <leader>sh :botright new <bar> resize 10 <bar> term <CR>
+nnoremap <leader>sh :call ZshTerminalToggle()<cr>
+tnoremap <leader>sh <C-\><C-n>:call ZshTerminalToggle()<cr>
 augroup Terminal
 	au!
 	autocmd TermOpen * setlocal nonumber norelativenumber
@@ -298,10 +312,34 @@ vnoremap <space> za
 ""                                                                                   
 ""plugin config
 
+"" vim-go
+let g:go_info_mode = 'guru'
+let g:go_def_mode = 'guru'
+let g:go_referrers_mode = 'guru'
+let g:go_rename_command = 'guru'
+let g:go_play_browser_command = 'google-chrome %URL% &'
+let g:go_highlight_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_structs = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_build_constraints = 1
+let g:go_highlight_extra_types = 1
+let g:go_template_autocreate = 0
+let g:go_gopls_enabled = 0
+let g:go_code_completion_enabled = 0
+let g:go_doc_keywordprg_enabled = 0
+
+"" Pear tree
+let g:pear_tree_ft_disabled = ['tex']
+let g:pear_tree_repeatable_expand = 0
+
 "" vim-lsp-cxx-highlight
 let g:lsp_cxx_hl_use_text_props = 1
 
 "" coc.nvim
+let g:coc_global_extensions = ['coc-json', 'coc-git', 'coc-vimlsp', 'coc-prettier', 'coc-eslint', 'coc-java', 'coc-omnisharp', 'coc-go', 'coc-html', 'coc-python', 'coc-sh', 'coc-texlab', 'coc-clangd', 'coc-css', 'coc-xml', 'coc-cmake', 'coc-yaml', 'coc-phpactor', 'coc-snippets']
 "" Use tab to complete
 " Use tab to trigger completion and navigate.
 inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : <SID>check_back_space() ? "\<TAB>" : coc#refresh()
@@ -339,7 +377,7 @@ nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
 "" Highlight the symbol and its references when holding the cursor.
-" autocmd CursorHold * silent call CocActionAsync('highlight')
+autocmd CursorHold * silent call CocActionAsync('highlight')
 
 "" Symbol renaming.
 nmap <leader>rn <Plug>(coc-rename)
@@ -348,7 +386,7 @@ nmap <leader>rn <Plug>(coc-rename)
 xmap <leader>cf  <Plug>(coc-format-selected)
 nmap <leader>cf  <Plug>(coc-format-selected)
 
-"" Zoom
+"" vim-zoom
 nmap <leader>m <Plug>(zoom-toggle)
 
 "" IndentLine
@@ -356,7 +394,7 @@ let g:indentLine_char = "\|"
 let g:indentLine_faster = 1
 let g:indentLine_concealcursor='inc'
 let g:indentLine_first_char = "\|"
-let g:indentLine_showFirstIndentLevel = 0
+let g:indentLine_showFirstIndentLevel = 1
 let g:indentLine_bufTypeExclude = ['help', 'terminal']
 let g:indentLine_bufNameExclude = ['_.*', 'NERD_tree.*']
 
@@ -416,11 +454,9 @@ let g:Tex_ViewRule_pdf = 'evince'
 let g:Tex_PromptedEnvironments = 'pmatrix,alignat*,gather*,align*,enumerate,itemize,mini*,maxi*'
 
 "" Vim-airline
-""  @TODO need to fix this still - get it back to old rc file
 let g:airline_theme='gruvbox'
 let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
-" let g:airline#extensions#ale#enabled = 1
 let g:airline#extensions#tagbar#enabled = 1
 let g:airline#extensions#whitespace#enabled = 0
 let g:airline_skip_empty_sections = 1
@@ -428,14 +464,6 @@ let g:airline_powerline_fonts = 1
 
 "" Tagbar
 nnoremap <Leader>f :TagbarToggle<CR>
-
-"" Fast-Fold
-let g:fastfold_savehook=1
-let g:fastfold_minlines=0
-xnoremap iz :<c-u>FastFoldUpdate<cr><esc>:<c-u>normal! ]zv[z<cr>
-xnoremap az :<c-u>FastFoldUpdate<cr><esc>:<c-u>normal! ]zV[z<cr>
-
-"" fzf.vim
 
 "" Vim-closetags
 let g:closetag_filetypes = 'html,xhtml,phtml,aspvbs'
@@ -448,6 +476,11 @@ let g:closetag_filetypes = 'html,xhtml,phtml,aspvbs'
 ""   |______/_/    \_\_| \_|\_____|\____/_/    \_\_____|______|_____/ 
 ""                                                                    
 ""languages
+
+"" GoLang
+nnoremap gat :CocCommand go.tags.add 
+nnoremap grt :CocCommand go.tags.remove 
+autocmd BufWritePre *.go :call CocAction('runCommand', 'editor.action.organizeImport')
 
 "" Latex
 let g:tex_conceal=""
@@ -471,3 +504,68 @@ autocmd BufEnter *.cshtml :setlocal filetype=html
 ""                                                            
 ""commands
 command! FixWhitespace :%s/\s\+$//e
+
+let s:zsh_terminal_window = -1
+let s:zsh_terminal_buffer = -1
+let s:zsh_terminal_job_id = -1
+
+function! ZshTerminalOpen()
+  " Check if buffer exists, if not create a window and a buffer
+  if !bufexists(s:zsh_terminal_buffer)
+    " Creates a window call monkey_terminal
+    new zsh_terminal
+    " Moves to the window the right the current one
+    wincmd J
+    resize 12
+    let s:zsh_terminal_job_id = termopen($SHELL, { 'detach': 1 })
+
+     " Change the name of the buffer to "Terminal 1"
+     silent file Terminal\ 1
+     " Gets the id of the terminal window
+     let s:zsh_terminal_window = win_getid()
+     let s:zsh_terminal_buffer = bufnr('%')
+
+    " The buffer of the terminal won't appear in the list of the buffers
+    " when calling :buffers command
+    set nobuflisted
+  else
+    if !win_gotoid(s:zsh_terminal_window)
+    sp
+    " Moves to the window below the current one
+    wincmd J   
+    resize 12
+    buffer Terminal\ 1
+     " Gets the id of the terminal window
+     let s:zsh_terminal_window = win_getid()
+    endif
+  endif
+endfunction
+
+function! ZshTerminalToggle()
+  if win_gotoid(s:zsh_terminal_window)
+    call ZshTerminalClose()
+  else
+    call ZshTerminalOpen()
+  endif
+endfunction
+
+function! ZshTerminalClose()
+  if win_gotoid(s:zsh_terminal_window)
+    " close the current window
+    hide
+  endif
+endfunction
+
+function! ZshTerminalExec(cmd)
+  if !win_gotoid(s:zsh_terminal_window)
+    call ZshTerminalOpen()
+  endif
+
+  " clear current input
+  call jobsend(s:zsh_terminal_job_id, "clear\n")
+
+  " run cmd
+  call jobsend(s:zsh_terminal_job_id, a:cmd . "\n")
+  normal! G
+  wincmd p
+endfunction

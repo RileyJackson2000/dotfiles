@@ -76,12 +76,14 @@ source $ZSH/oh-my-zsh.sh
 
 
 # Updating PATH
-PATH="/home/riley/.cargo/bin:/usr/local/texlive/2020/bin/x86_64-linux:$PATH"
+PATH="/home/riley/go/bin:/usr/local/go/bin:/home/riley/.cargo/bin:/usr/local/texlive/2020/bin/x86_64-linux:$PATH"
 
 # latex PATH info
 
 export MANPATH="/usr/local/texlive/2020/texmf-dist/doc/man:/usr/local/man:$MANPATH"
 export INFOPATH="/usr/local/texlive/2020/texmf-dist/doc/info:$INFOPATH"
+export GOPATH="/home/riley/go"
+export GOROOT="/usr/local/go"
 
 # Base16 Shell
 BASE16_SHELL="$HOME/.config/base16-shell/"
