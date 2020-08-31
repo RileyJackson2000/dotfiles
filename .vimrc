@@ -11,66 +11,33 @@
 
 call plug#begin()
 
-"" File exploration @TOOD switch to fern.vim?
 Plug 'preservim/nerdtree'
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'mhinz/vim-signify'
-
-"" Colors
+Plug 'ryanoasis/vim-devicons'
+Plug 'morhetz/gruvbox'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'arcticicestudio/nord-vim'
-Plug 'morhetz/gruvbox'
-
-"" Status bar
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-
-"" Tags
 Plug 'majutsushi/tagbar'
-" Plug 'ludovicchabant/vim-gutentags'
-
-"" Commenting
-Plug 'tpope/vim-commentary'
-
-"" Fuzzy search
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
-
-"" Snippets
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
-
-"" Github
+Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
-
-"" Formatting
+Plug 'tpope/vim-surround'
 Plug 'Yggdroot/indentLine'
-
-"" Miscellaneous
 Plug 'dhruvasagar/vim-zoom'
-
-"" Conveniance
-Plug 'jiangmiao/auto-pairs'
-" Plug 'tpope/vim-endwise'
-" Plug 'rstacruz/vim-closer'
-
-"" Languages
-"" JavaScript
-Plug 'yuezk/vim-js'
-Plug 'maxmellon/vim-jsx-pretty'
-"" Latex
-Plug 'vim-latex/vim-latex'
-"" HTML
-" Plug 'alvan/vim-clometag'
-"" Python
+Plug 'yuezk/vim-js', {'for': 'js'}
+Plug 'maxmellon/vim-jsx-pretty', {'for': 'jsx'}
+Plug 'vim-latex/vim-latex', {'for': 'tex'}
 Plug 'hdima/python-syntax', {'for': 'python'}
-"" C++
-
-"" Completion/linting/highlighting
+Plug 'jackguo380/vim-lsp-cxx-highlight', {'for': ['cpp', 'hpp']}
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'jackguo380/vim-lsp-cxx-highlight'
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries', 'for': 'go' }
 
 call plug#end()
 
@@ -83,6 +50,9 @@ call plug#end()
 ""                                          
 ""config
 
+filetype indent plugin on
+syntax enable 
+
 set shortmess+=c
 
 "" No Backup
@@ -91,9 +61,6 @@ set nowritebackup
 
 "" Less latency
 set updatetime=300
-
-filetype indent plugin on
-syntax enable 
 
 "" Encoding
 set encoding=utf-8
@@ -244,8 +211,8 @@ tnoremap jk <C-\><C-n>
 nnoremap <leader>sh :call ZshTerminalToggle()<cr>
 tnoremap <leader>sh <C-\><C-n>:call ZshTerminalToggle()<cr>
 augroup Terminal
-	au!
-	autocmd TermOpen * setlocal nonumber norelativenumber
+  au!
+  autocmd TermOpen * setlocal nonumber norelativenumber
 augroup END
 
 "" Better movement
@@ -314,11 +281,22 @@ vnoremap <space> za
 
 "" vim-go
 let g:go_info_mode = 'guru'
-let g:go_def_mode = 'guru'
+let g:go_def_mapping_enabled = 0
 let g:go_referrers_mode = 'guru'
 let g:go_rename_command = 'guru'
 let g:go_play_browser_command = 'google-chrome %URL% &'
+let g:go_test_show_name = 1
+let g:go_test_timeout= '3s'
+let g:go_imports_autosave = 0 " for some reason this makes linting messages dissapear on save
+let g:go_fmt_autosave = 0 " for some reason this makes linting messages dissapear on save
+let g:go_highlight_chan_whitespace_error = 1
+let g:go_highlight_space_tab_error = 1
 let g:go_highlight_types = 1
+let g:go_highlight_function_parameters = 1
+let g:go_highlight_function_calls = 1
+let g:go_highlight_generate_tags = 1
+let g:go_highlight_variable_declarations = 1
+let g:go_highlight_variable_assignments = 1
 let g:go_highlight_fields = 1
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
@@ -331,15 +309,11 @@ let g:go_gopls_enabled = 0
 let g:go_code_completion_enabled = 0
 let g:go_doc_keywordprg_enabled = 0
 
-"" Pear tree
-let g:pear_tree_ft_disabled = ['tex']
-let g:pear_tree_repeatable_expand = 0
-
 "" vim-lsp-cxx-highlight
 let g:lsp_cxx_hl_use_text_props = 1
 
 "" coc.nvim
-let g:coc_global_extensions = ['coc-json', 'coc-git', 'coc-vimlsp', 'coc-prettier', 'coc-eslint', 'coc-java', 'coc-omnisharp', 'coc-go', 'coc-html', 'coc-python', 'coc-sh', 'coc-texlab', 'coc-clangd', 'coc-css', 'coc-xml', 'coc-cmake', 'coc-yaml', 'coc-phpactor', 'coc-snippets']
+let g:coc_global_extensions = ['coc-json', 'coc-git', 'coc-vimlsp', 'coc-prettier', 'coc-eslint', 'coc-java', 'coc-omnisharp', 'coc-go', 'coc-html', 'coc-python', 'coc-sh', 'coc-texlab', 'coc-clangd', 'coc-css', 'coc-xml', 'coc-cmake', 'coc-yaml', 'coc-phpactor', 'coc-snippets', 'coc-pairs']
 "" Use tab to complete
 " Use tab to trigger completion and navigate.
 inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : <SID>check_back_space() ? "\<TAB>" : coc#refresh()
@@ -393,7 +367,7 @@ nmap <leader>m <Plug>(zoom-toggle)
 let g:indentLine_char = "\|"
 let g:indentLine_faster = 1
 let g:indentLine_concealcursor='inc'
-let g:indentLine_first_char = "\|"
+let g:indentLine_first_char = ""
 let g:indentLine_showFirstIndentLevel = 1
 let g:indentLine_bufTypeExclude = ['help', 'terminal']
 let g:indentLine_bufNameExclude = ['_.*', 'NERD_tree.*']
@@ -420,28 +394,8 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 "" Open NERDTree if no files specified
-" autocmd StdinReadPre * let s:std_in=1
-" autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-
-"" NERDTree File highlighting
-" function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
-"  exec 'autocmd filetype nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
-"  exec 'autocmd filetype nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
-" endfunction
-
-" call NERDTreeHighlightFile('pdf', 'green', 'none', 'green', '#151515')
-" call NERDTreeHighlightFile('pdf', 'yellow', 'none', 'yellow', '#151515')
-" call NERDTreeHighlightFile('md', 'blue', 'none', '#3366FF', '#151515')
-" call NERDTreeHighlightFile('yml', 'yellow', 'none', 'yellow', '#151515')
-" call NERDTreeHighlightFile('config', 'yellow', 'none', 'yellow', '#151515')
-" call NERDTreeHighlightFile('conf', 'yellow', 'none', 'yellow', '#151515')
-" call NERDTreeHighlightFile('json', 'yellow', 'none', 'yellow', '#151515')
-" call NERDTreeHighlightFile('html', 'yellow', 'none', 'yellow', '#151515')
-" call NERDTreeHighlightFile('styl', 'cyan', 'none', 'cyan', '#151515')
-" call NERDTreeHighlightFile('css', 'cyan', 'none', 'cyan', '#151515')
-" call NERDTreeHighlightFile('coffee', 'Red', 'none', 'red', '#151515')
-" call NERDTreeHighlightFile('js', 'Red', 'none', '#ffa500', '#151515')
-" call NERDTreeHighlightFile('php', 'Magenta', 'none', '#ff00ff', '#151515')
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
 map <S-m> :NERDTreeToggle<CR>
 
@@ -477,11 +431,6 @@ let g:closetag_filetypes = 'html,xhtml,phtml,aspvbs'
 ""                                                                    
 ""languages
 
-"" GoLang
-nnoremap gat :CocCommand go.tags.add 
-nnoremap grt :CocCommand go.tags.remove 
-autocmd BufWritePre *.go :call CocAction('runCommand', 'editor.action.organizeImport')
-
 "" Latex
 let g:tex_conceal=""
 let g:tex_no_error=1 "Fixes underscores being highlighted
@@ -495,6 +444,10 @@ let g:python_highlight_all = 1
 autocmd BufEnter *.ASP :setlocal filetype=aspvbs
 autocmd BufEnter *.cshtml :setlocal filetype=html
 
+"" C++
+" Need to condition this later, fine for now...
+set path+=/usr/include/c++/9/
+
 ""     _____ ____  __  __ __  __          _   _ _____   _____ 
 ""    / ____/ __ \|  \/  |  \/  |   /\   | \ | |  __ \ / ____|
 ""   | |   | |  | | \  / | \  / |  /  \  |  \| | |  | | (___  
@@ -505,67 +458,54 @@ autocmd BufEnter *.cshtml :setlocal filetype=html
 ""commands
 command! FixWhitespace :%s/\s\+$//e
 
-let s:zsh_terminal_window = -1
-let s:zsh_terminal_buffer = -1
-let s:zsh_terminal_job_id = -1
+let g:zsh_terminal_window = -1
+ret g:zsh_terminal_job_id = -1
 
 function! ZshTerminalOpen()
-  " Check if buffer exists, if not create a window and a buffer
-  if !bufexists(s:zsh_terminal_buffer)
-    " Creates a window call monkey_terminal
+  if !bufexists("Terminal 1")
     new zsh_terminal
-    " Moves to the window the right the current one
     wincmd J
-    resize 12
-    let s:zsh_terminal_job_id = termopen($SHELL, { 'detach': 1 })
-
-     " Change the name of the buffer to "Terminal 1"
-     silent file Terminal\ 1
-     " Gets the id of the terminal window
-     let s:zsh_terminal_window = win_getid()
-     let s:zsh_terminal_buffer = bufnr('%')
-
-    " The buffer of the terminal won't appear in the list of the buffers
-    " when calling :buffers command
+    resize 10
+    let g:zsh_terminal_job_id = termopen($SHELL, { 'detach': 1 })
+    silent file Terminal\ 1
     set nobuflisted
+    let g:zsh_terminal_window = win_getid()
   else
-    if !win_gotoid(s:zsh_terminal_window)
-    sp
-    " Moves to the window below the current one
-    wincmd J   
-    resize 12
-    buffer Terminal\ 1
-     " Gets the id of the terminal window
-     let s:zsh_terminal_window = win_getid()
+    if !win_gotoid(g:zsh_terminal_window)
+      sp
+      wincmd J
+      resize 10
+      buffer Terminal\ 1
+      let g:zsh_terminal_window = win_getid()
     endif
   endif
+  startinsert
 endfunction
 
 function! ZshTerminalToggle()
-  if win_gotoid(s:zsh_terminal_window)
-    call ZshTerminalClose()
+  if expand('%') == "Terminal 1"
+    hide
   else
     call ZshTerminalOpen()
   endif
 endfunction
 
-function! ZshTerminalClose()
-  if win_gotoid(s:zsh_terminal_window)
-    " close the current window
-    hide
+command! -nargs=* -complete=file -bang Rename :call Rename("<args>", "<bang>")
+
+function! Rename(name, bang)
+  let l:curfile = expand("%:p")
+  let l:curfilepath = expand("%:p:h")
+  let l:newname = l:curfilepath . "/" . a:name
+  let v:errmsg = ""
+  silent! exe "saveas" . a:bang . " " . l:newname
+  if v:errmsg =~# '^$\|^E329'
+    if expand("%:p") !=# l:curfile && filewritable(expand("%:p"))
+      silent exe "bwipe! " . l:curfile
+      if delete(l:curfile)
+        echoerr "Could not delete " . l:curfile
+      endif
+    endif
+  else
+    echoerr v:errmsg
   endif
-endfunction
-
-function! ZshTerminalExec(cmd)
-  if !win_gotoid(s:zsh_terminal_window)
-    call ZshTerminalOpen()
-  endif
-
-  " clear current input
-  call jobsend(s:zsh_terminal_job_id, "clear\n")
-
-  " run cmd
-  call jobsend(s:zsh_terminal_job_id, a:cmd . "\n")
-  normal! G
-  wincmd p
 endfunction
