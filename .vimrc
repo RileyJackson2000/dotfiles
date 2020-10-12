@@ -12,15 +12,16 @@
 call plug#begin()
 
 Plug 'preservim/nerdtree'
-Plug 'jistr/vim-nerdtree-tabs'
-Plug 'mhinz/vim-signify'
+" Plug 'jistr/vim-nerdtree-tabs'
+" Plug 'mhinz/vim-signify'
 Plug 'ryanoasis/vim-devicons'
 Plug 'morhetz/gruvbox'
-Plug 'NLKNguyen/papercolor-theme'
-Plug 'arcticicestudio/nord-vim'
+" Plug 'NLKNguyen/papercolor-theme'
+" Plug 'arcticicestudio/nord-vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'majutsushi/tagbar'
+Plug 'ludovicchabant/vim-gutentags'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'SirVer/ultisnips'
@@ -33,9 +34,9 @@ Plug 'Yggdroot/indentLine'
 Plug 'dhruvasagar/vim-zoom'
 Plug 'yuezk/vim-js', {'for': 'js'}
 Plug 'maxmellon/vim-jsx-pretty', {'for': 'jsx'}
+" Plug 'lervag/vimtex', {'for': 'tex'}
 Plug 'vim-latex/vim-latex', {'for': 'tex'}
 Plug 'hdima/python-syntax', {'for': 'python'}
-Plug 'jackguo380/vim-lsp-cxx-highlight', {'for': ['cpp', 'hpp']}
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries', 'for': 'go' }
 
@@ -83,14 +84,14 @@ set ignorecase
 set smartcase
 
 "" Spelling
-setlocal spell spelllang=en
+setlocal spelllang=en spell
 syntax spell toplevel
 
 "" Miscellaneous
 set tildeop
 set hidden "How is this not a default???
 set whichwrap+=<,>,h,l,[,]
-set mouse=a
+set mouse=n
 set shiftround
 set nojoinspaces "J is cancer
 
@@ -254,7 +255,7 @@ nnoremap n nzzzv
 nnoremap N Nzzzv
 
 "" Ripgrep
-nnoremap <leader>r :Rg<CR>
+nnoremap <leader>rr :Rg<CR>
 
 "" Quick edits
 nnoremap <leader>ev :e ~/.vimrc<CR>
@@ -367,7 +368,7 @@ nmap <leader>m <Plug>(zoom-toggle)
 let g:indentLine_char = "\|"
 let g:indentLine_faster = 1
 let g:indentLine_concealcursor='inc'
-let g:indentLine_first_char = ""
+let g:indentLine_first_char = "|"
 let g:indentLine_showFirstIndentLevel = 1
 let g:indentLine_bufTypeExclude = ['help', 'terminal']
 let g:indentLine_bufNameExclude = ['_.*', 'NERD_tree.*']
@@ -398,6 +399,10 @@ autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
 map <S-m> :NERDTreeToggle<CR>
+
+"" vimtex
+" let g:tex_fold_enabled=1
+" let g:tex_flavor='latex'
 
 "" Vim-latex
 let g:Tex_AdvancedMath = 1
@@ -432,6 +437,7 @@ let g:closetag_filetypes = 'html,xhtml,phtml,aspvbs'
 ""languages
 
 "" Latex
+" autocmd FileType tex let b:coc_pairs = [["$", "$"]]
 let g:tex_conceal=""
 let g:tex_no_error=1 "Fixes underscores being highlighted
 

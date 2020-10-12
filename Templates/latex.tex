@@ -1,4 +1,4 @@
-\documentclass[a4paper]{report}
+\documentclass[a4paper]{article}
 
 \usepackage[stretch=10]{microtype}
 \usepackage[a4paper, margin=1in]{geometry}
@@ -9,13 +9,27 @@
 \usepackage{amsfonts}
 \usepackage{mathtools}
 \usepackage{nicefrac}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
 \usepackage[hidelinks]{hyperref}
 \usepackage[short, nocomma]{optidef}
-
+\usepackage{tikz}
+\usepackage[export]{adjustbox}
+\usepackage[edges]{forest}
 \usepackage{xpatch}
 \makeatletter
 \AtBeginDocument{\xpatchcmd{\@thm}{\thm@headpunct{.}}{\thm@headpunct{}}{}{}}
 \makeatother
+
+\newcommand\restr[2]{{% we make the whole thing an ordinary symbol
+    \left.\kern-\nulldelimiterspace % automatically resize the bar with \right
+      #1 % the function
+      \vphantom{\big|} % pretend it's a little taller at normal size
+      \right|_{#2} % this is the delimiter
+  }}
+
+\newcommand{\algorithmicbreak}{\textbf{break}}
+\newcommand{\BREAK}{\State\algorithmicbreak}
 
 % Define amsthm environments
 
@@ -29,15 +43,19 @@
 \theoremstyle{definition}
 \newtheorem*{defn}{Definition}
 \newtheorem*{conj}{Conjecture}
-\newtheorem*{exmp}{Example}
+\newtheorem*{exam}{Example}
+\newtheorem*{exe}{Exercise}
 
 \theoremstyle{remark}
 \newtheorem*{rem}{Remark}
+\newtheorem*{fact}{Fact}
 \newtheorem*{note}{Note}
+\newtheorem*{nota}{Notation}
 \newtheorem*{case}{Case}
 
 \DeclareMathOperator{\im}{im}
 \DeclareMathOperator{\Int}{int}
+\DeclareMathOperator{\lip}{Lip}
 \DeclareMathOperator{\Null}{null}
 \DeclareMathOperator{\Range}{Range}
 \DeclareMathOperator{\tr}{tr}
@@ -51,6 +69,12 @@
 \DeclareMathOperator{\lcm}{lcm}
 \DeclareMathOperator{\GL}{GL}
 \DeclareMathOperator{\ev}{ev}
+\DeclareMathOperator{\cl}{cl}
+\DeclareMathOperator{\ext}{ext}
+\DeclareMathOperator{\bd}{bd}
+\DeclareMathOperator{\argmin}{argmin}
+\DeclareMathOperator{\argmax}{argmax}
+\DeclareMathOperator{\epi}{epi}
 
 \DeclarePairedDelimiter\abs{\lvert}{\rvert}%
 \DeclarePairedDelimiter\norm{\lVert}{\rVert}%
@@ -70,6 +94,12 @@
 %
 \let\oldinn\inn
 \def\inn{\@ifstar{\oldinn}{\oldinn*}}
+
+\let\oldfloor\floor
+\def\floor{\@ifstar{\oldfloor}{\oldfloor*}}
+
+\let\oldceil\ceil
+\def\ceil{\@ifstar{\oldceil}{\oldceil*}}
 \makeatother
 
 % fix omicron
