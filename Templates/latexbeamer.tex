@@ -1,8 +1,8 @@
 \PassOptionsToPackage{dvipsnames}{xcolor}
-\documentclass[a4paper]{article}
+\documentclass{beamer}
 
 \usepackage[stretch=10]{microtype}
-\usepackage[a4paper, margin=1in]{geometry}
+\usepackage{geometry}
 \usepackage{enumitem}
 \usepackage{amsmath}
 \usepackage{amsthm}
@@ -11,7 +11,7 @@
 \usepackage{mathtools}
 \usepackage{nicefrac}
 \usepackage{algorithm}
-\usepackage[hidelinks]{hyperref}
+\usepackage{hyperref}
 \usepackage[short, nocomma]{optidef}
 \usepackage{tikz}
 \usepackage[export]{adjustbox}
@@ -148,19 +148,18 @@
 \newtheorem*{lem}{Lemma}
 \newtheorem*{prop}{Proposition}
 \newtheorem*{cor}{Corollary}
+\newtheorem*{claim}{Claim}
 
 \theoremstyle{definition}
-\newtheorem*{claim}{Claim}
 \newtheorem*{defn}{Definition}
 \newtheorem*{conj}{Conjecture}
 \newtheorem*{exam}{Example}
-\newtheorem*{exams}{Examples}
 \newtheorem*{exe}{Exercise}
 
 \theoremstyle{remark}
 \newtheorem*{rem}{Remark}
-\newtheorem*{fact}{Fact}
-\newtheorem*{note}{Note}
+% \newtheorem*{fact}{Fact}
+% \newtheorem*{note}{Note}
 \newtheorem*{nota}{Notation}
 \newtheorem*{case}{Case}
 
@@ -197,7 +196,6 @@
 \DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
 
 \newcommand\ret[2]{\left.{#1}\right|_{#2}}
-\newcommand\proj[2]{\text{proj}\left(#1\mid#2\right)}
 
 % Swap the definition of \abs* and \norm*, so that \abs
 % and \norm resizes the size of the brackets, and the 
@@ -354,7 +352,6 @@
 % \newcommand{\IF}{\text{ if }}
 \newcommand{\IFF}{\text{ if and only if }}
 \newcommand{\OR}{\text{ or }}
-\newcommand{\XOR}{\text{ xor }}
 \newcommand{\ST}{\text{ such that }}
 \newcommand{\LHS}{\text{LHS}}
 \newcommand{\RHS}{\text{RHS}}
@@ -369,7 +366,6 @@
 \newcommand{\QIF}{\quad\text{ if }\quad}
 \newcommand{\QIFF}{\quad\text{ if and only if }\quad}
 \newcommand{\QOR}{\quad\text{ or }\quad}
-\newcommand{\QXOR}{\quad\text{ xor }\quad}
 \newcommand{\QST}{\quad\text{ st }\quad}
 \newcommand{\QLHS}{\quad\text{ LHS }\quad}
 \newcommand{\QRHS}{\quad\text{ RHS }\quad}

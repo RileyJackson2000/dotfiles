@@ -94,6 +94,7 @@ set whichwrap+=<,>,h,l,[,]
 set mouse=n
 set shiftround
 set nojoinspaces "J is cancer
+set scrolloff=3
 
 "" Copy Paste
 set clipboard=unnamed,unnamedplus
@@ -256,6 +257,8 @@ nnoremap N Nzzzv
 
 "" Ripgrep
 nnoremap <leader>rr :Rg<CR>
+nnoremap <leader>rf :Files<CR>
+nnoremap <leader>rb :Buffers<CR>
 
 "" Quick edits
 nnoremap <leader>ev :e ~/.vimrc<CR>

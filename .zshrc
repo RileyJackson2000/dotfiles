@@ -76,7 +76,7 @@ source $ZSH/oh-my-zsh.sh
 
 
 # Updating PATH
-PATH="/home/riley/go/bin:/usr/local/go/bin:/home/riley/.cargo/bin:/usr/local/texlive/2020/bin/x86_64-linux:$PATH"
+PATH="/home/riley/go/bin:/usr/local/go/bin:/home/riley/.cargo/bin:/usr/local/texlive/2020/bin/x86_64-linux:/usr/local/MATLAB/R2020b/bin:$PATH"
 
 # latex PATH info
 
