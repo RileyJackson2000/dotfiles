@@ -11,6 +11,8 @@
 
 call plug#begin()
 
+Plug 'tomlion/vim-solidity'
+Plug 'qpkorr/vim-bufkill'
 Plug 'preservim/nerdtree'
 " Plug 'jistr/vim-nerdtree-tabs'
 " Plug 'mhinz/vim-signify'
@@ -21,7 +23,7 @@ Plug 'morhetz/gruvbox'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'majutsushi/tagbar'
-Plug 'ludovicchabant/vim-gutentags'
+" Plug 'ludovicchabant/vim-gutentags'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'SirVer/ultisnips'
@@ -96,13 +98,11 @@ set shiftround
 set nojoinspaces "J is cancer
 set scrolloff=3
 
-"" Copy Paste
+"" Use system clipboard for copy/paste
 set clipboard=unnamed,unnamedplus
 
-"" Shell
 set shell=$SHELL
 
-"" File format
 set fileformats=unix
 
 "" Persistent undo
@@ -181,8 +181,11 @@ set lazyredraw
 ""                                                           
 ""mappings
 
+"" format on new line
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
 "" Fix bd with NERDTree @TODO this still doesnt work, need to find something better
-" cnoreabbrev bd bp<bar>sp<bar>bn<bar>bd<CR>
+cnoreabbrev bd BD
 
 "" Update cwd to that of current file
 nnoremap cdc :lcd %:p:h<CR>
@@ -317,7 +320,7 @@ let g:go_doc_keywordprg_enabled = 0
 let g:lsp_cxx_hl_use_text_props = 1
 
 "" coc.nvim
-let g:coc_global_extensions = ['coc-json', 'coc-git', 'coc-vimlsp', 'coc-prettier', 'coc-eslint', 'coc-java', 'coc-omnisharp', 'coc-go', 'coc-html', 'coc-python', 'coc-sh', 'coc-texlab', 'coc-clangd', 'coc-css', 'coc-xml', 'coc-cmake', 'coc-yaml', 'coc-phpactor', 'coc-snippets', 'coc-pairs']
+let g:coc_global_extensions = ['coc-json', 'coc-git', 'coc-vimlsp', 'coc-prettier', 'coc-eslint', 'coc-java', 'coc-omnisharp', 'coc-go', 'coc-python', 'coc-sh', 'coc-texlab', 'coc-clangd', 'coc-css', 'coc-xml', 'coc-cmake', 'coc-yaml', 'coc-phpactor', 'coc-snippets', 'coc-pairs']
 "" Use tab to complete
 " Use tab to trigger completion and navigate.
 inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : <SID>check_back_space() ? "\<TAB>" : coc#refresh()
@@ -327,11 +330,11 @@ inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 inoremap <silent><expr> <c-space> coc#refresh()
 "
 "" Use <CR> to confirm
-if exists('*complete_info')
-  inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
-else
-  inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-endif
+" if exists('*complete_info')
+"   inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+" else
+"   inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+" endif
 
 "" K to check docs
 nnoremap <silent> K :call <SID>show_documentation()<CR>

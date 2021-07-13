@@ -76,7 +76,7 @@ source $ZSH/oh-my-zsh.sh
 
 
 # Updating PATH
-PATH="/home/riley/go/bin:/usr/local/go/bin:/home/riley/.cargo/bin:/usr/local/texlive/2020/bin/x86_64-linux:/usr/local/MATLAB/R2020b/bin:$PATH"
+PATH="/home/riley/Clones/llvm-project/build/bin:/home/riley/go/bin:/usr/local/go/bin:/home/riley/.cargo/bin:/usr/local/texlive/2020/bin/x86_64-linux:/usr/local/MATLAB/R2020b/bin:$PATH"
 
 # latex PATH info
 
@@ -114,7 +114,7 @@ alias v=nvim
 alias web="aws s3 sync /home/riley/rjackson2000.com s3://rjackson2000.com"
 alias psudo='sudo env PATH="$PATH"'
 alias ff='fzf -q ""'
-alias ls='exa'
+# alias ls='exa'
 alias python='python3.8'
 
 # zsh-bd

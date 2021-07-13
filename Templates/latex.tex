@@ -2,6 +2,7 @@
 \documentclass[a4paper]{article}
 
 \usepackage[stretch=10]{microtype}
+\usepackage{fancyhdr}
 \usepackage[a4paper, margin=1in]{geometry}
 \usepackage{enumitem}
 \usepackage{amsmath}
@@ -129,6 +130,8 @@
 \AtBeginDocument{\xpatchcmd{\@thm}{\thm@headpunct{.}}{\thm@headpunct{}}{}{}}
 \makeatother
 
+\newcommand{\minus}{\scalebox{0.75}[1.0]{$-$}}
+
 \newcommand\restr[2]{{% we make the whole thing an ordinary symbol
     \left.\kern-\nulldelimiterspace % automatically resize the bar with \right
       #1 % the function
@@ -141,20 +144,23 @@
 \newcommand{\algorithmiccontinue}{\textbf{continue}}
 \newcommand{\CONTINUE}{\State\algorithmiccontinue}
 
+% sketchy horizontal bar command
+\newcommand{\hor}{\rotatebox[origin=c]{90}{$\vert$}}
+
 % Define amsthm environments
 
-\theoremstyle{plain}
+% \theoremstyle{plain}
+
+\theoremstyle{definition}
+\newtheorem*{claim}{Claim}
 \newtheorem*{thm}{Theorem}
 \newtheorem*{lem}{Lemma}
 \newtheorem*{prop}{Proposition}
 \newtheorem*{cor}{Corollary}
-
-\theoremstyle{definition}
-\newtheorem*{claim}{Claim}
 \newtheorem*{defn}{Definition}
 \newtheorem*{conj}{Conjecture}
-\newtheorem*{exam}{Example}
-\newtheorem*{exams}{Examples}
+\newtheorem*{exa}{Example}
+\newtheorem*{exas}{Examples}
 \newtheorem*{exe}{Exercise}
 
 \theoremstyle{remark}
@@ -164,9 +170,12 @@
 \newtheorem*{nota}{Notation}
 \newtheorem*{case}{Case}
 
+\let\div\relax
+\DeclareMathOperator{\div}{div}
 \DeclareMathOperator{\im}{im}
 \DeclareMathOperator{\oc}{oc}
 \DeclareMathOperator{\Int}{int}
+\DeclareMathOperator{\Vol}{Vol}
 \DeclareMathOperator{\Id}{Id}
 \DeclareMathOperator{\lip}{Lip}
 \DeclareMathOperator{\Null}{null}
@@ -182,6 +191,10 @@
 \DeclareMathOperator{\lcm}{lcm}
 \DeclareMathOperator{\GL}{GL}
 \DeclareMathOperator{\OPT}{OPT}
+\DeclareMathOperator{\poly}{poly}
+\DeclareMathOperator{\SC}{SC}
+\DeclareMathOperator{\LP}{LP}
+\DeclareMathOperator{\tmp}{tmp}
 \DeclareMathOperator{\ev}{ev}
 \DeclareMathOperator{\cl}{cl}
 \DeclareMathOperator{\ext}{ext}
@@ -189,6 +202,17 @@
 \DeclareMathOperator{\argmin}{argmin}
 \DeclareMathOperator{\argmax}{argmax}
 \DeclareMathOperator{\epi}{epi}
+\DeclareMathOperator{\conv}{conv}
+\DeclareMathOperator{\stab}{stab}
+\DeclareMathOperator{\TSP}{TSP}
+\DeclareMathOperator{\dist}{dist}
+\DeclareMathOperator{\aff}{aff}
+\DeclareMathOperator{\proj}{proj}
+\DeclareMathOperator{\cone}{cone}
+\DeclareMathOperator{\lin}{lin}
+\DeclareMathOperator{\rec}{rec}
+\DeclareMathOperator{\BCC}{BCC}
+\DeclareMathOperator{\cost}{Cost}
 
 \DeclarePairedDelimiter\abs{\lvert}{\rvert}%
 \DeclarePairedDelimiter\norm{\lVert}{\rVert}%
@@ -197,7 +221,6 @@
 \DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
 
 \newcommand\ret[2]{\left.{#1}\right|_{#2}}
-\newcommand\proj[2]{\text{proj}\left(#1\mid#2\right)}
 
 % Swap the definition of \abs* and \norm*, so that \abs
 % and \norm resizes the size of the brackets, and the 
@@ -249,6 +272,34 @@
 \newcommand{\bX}{\mathbb{X}}
 \newcommand{\bY}{\mathbb{Y}}
 \newcommand{\bZ}{\mathbb{Z}}
+
+% fractal letters
+\newcommand{\fA}{\mathfrak{A}}
+\newcommand{\fB}{\mathfrak{B}}
+\newcommand{\fC}{\mathfrak{C}}
+\newcommand{\fD}{\mathfrak{D}}
+\newcommand{\fE}{\mathfrak{E}}
+\newcommand{\fF}{\mathfrak{F}}
+\newcommand{\fG}{\mathfrak{G}}
+\newcommand{\fH}{\mathfrak{H}}
+\newcommand{\fI}{\mathfrak{I}}
+\newcommand{\fJ}{\mathfrak{J}}
+\newcommand{\fK}{\mathfrak{K}}
+\newcommand{\fL}{\mathfrak{L}}
+\newcommand{\fM}{\mathfrak{M}}
+\newcommand{\fN}{\mathfrak{N}}
+\newcommand{\fO}{\mathfrak{O}}
+\newcommand{\fP}{\mathfrak{P}}
+\newcommand{\fQ}{\mathfrak{Q}}
+\newcommand{\fR}{\mathfrak{R}}
+\newcommand{\fS}{\mathfrak{S}}
+\newcommand{\fT}{\mathfrak{T}}
+\newcommand{\fU}{\mathfrak{U}}
+\newcommand{\fV}{\mathfrak{V}}
+\newcommand{\fW}{\mathfrak{W}}
+\newcommand{\fX}{\mathfrak{X}}
+\newcommand{\fY}{\mathfrak{Y}}
+\newcommand{\fZ}{\mathfrak{Z}}
 
 % calligraphic letters
 \newcommand{\cA}{\mathcal{A}}
@@ -361,6 +412,7 @@
 \newcommand{\EVEN}{\text{ even }}
 \newcommand{\ODD}{\text{ odd }}
 \newcommand{\SO}{\text{ so }}
+\newcommand{\IS}{\text{ is }}
 \newcommand{\WHERE}{\text{ where }}
 \newcommand{\SINCE}{\text{ since }}
 \newcommand{\QAND}{\quad\text{ and }\quad}
@@ -378,5 +430,11 @@
 \newcommand{\QWHERE}{\quad\text{ where }\quad}
 \newcommand{\QSINCE}{\quad\text{ since }\quad}
 \newcommand{\QSO}{\quad\text{ so }\quad}
+\newcommand{\QIS}{\quad\text{ is }\quad}
 
 \newcommand{\db}{\text{d}}
+
+\makeatletter
+\newcommand{\vast}{\bBigg@{4}}
+\newcommand{\Vast}{\bBigg@{5}}
+\makeatother
