@@ -2,6 +2,7 @@
 \documentclass{beamer}
 
 \usepackage[stretch=10]{microtype}
+\usepackage{fancyhdr}
 \usepackage{geometry}
 \usepackage{enumitem}
 \usepackage{amsmath}
@@ -21,6 +22,9 @@
 \usepackage[noend]{algcompatible}
 \usepackage[noend]{algpseudocode}
 \usepackage{calc}
+\usepackage[basic]{complexity}
+
+\algrenewcommand\textproc{}
 
 \makeatletter
 % code borrowed from Andrew Stacey; See
@@ -129,6 +133,8 @@
 \AtBeginDocument{\xpatchcmd{\@thm}{\thm@headpunct{.}}{\thm@headpunct{}}{}{}}
 \makeatother
 
+\newcommand{\minus}{\scalebox{0.75}[1.0]{$-$}}
+
 \newcommand\restr[2]{{% we make the whole thing an ordinary symbol
     \left.\kern-\nulldelimiterspace % automatically resize the bar with \right
       #1 % the function
@@ -141,31 +147,36 @@
 \newcommand{\algorithmiccontinue}{\textbf{continue}}
 \newcommand{\CONTINUE}{\State\algorithmiccontinue}
 
+% sketchy horizontal bar command
+\newcommand{\hor}{\rotatebox[origin=c]{90}{$\vert$}}
+
 % Define amsthm environments
 
-\theoremstyle{plain}
+% \theoremstyle{plain}
+
+\theoremstyle{definition}
+\newtheorem*{claim}{Claim}
 \newtheorem*{thm}{Theorem}
 \newtheorem*{lem}{Lemma}
 \newtheorem*{prop}{Proposition}
 \newtheorem*{cor}{Corollary}
-\newtheorem*{claim}{Claim}
-
-\theoremstyle{definition}
 \newtheorem*{defn}{Definition}
 \newtheorem*{conj}{Conjecture}
-\newtheorem*{exam}{Example}
+\newtheorem*{exa}{Example}
+\newtheorem*{exas}{Examples}
 \newtheorem*{exe}{Exercise}
 
 \theoremstyle{remark}
 \newtheorem*{rem}{Remark}
-% \newtheorem*{fact}{Fact}
-% \newtheorem*{note}{Note}
 \newtheorem*{nota}{Notation}
 \newtheorem*{case}{Case}
 
+\let\div\relax
+\DeclareMathOperator{\div}{div}
 \DeclareMathOperator{\im}{im}
 \DeclareMathOperator{\oc}{oc}
 \DeclareMathOperator{\Int}{int}
+\DeclareMathOperator{\Vol}{Vol}
 \DeclareMathOperator{\Id}{Id}
 \DeclareMathOperator{\lip}{Lip}
 \DeclareMathOperator{\Null}{null}
@@ -181,6 +192,16 @@
 \DeclareMathOperator{\lcm}{lcm}
 \DeclareMathOperator{\GL}{GL}
 \DeclareMathOperator{\OPT}{OPT}
+\DeclareMathOperator{\vbl}{vbl}
+\DeclareMathOperator{\LP}{LP}
+\DeclareMathOperator{\SDP}{SDP}
+\DeclareMathOperator{\Geo}{Geo}
+\DeclareMathOperator{\Bin}{Bin}
+\DeclareMathOperator{\Ber}{Ber}
+\DeclareMathOperator{\Poiss}{Poiss}
+\DeclareMathOperator{\NB}{NB}
+\DeclareMathOperator{\size}{size}
+\DeclareMathOperator{\tmp}{tmp}
 \DeclareMathOperator{\ev}{ev}
 \DeclareMathOperator{\cl}{cl}
 \DeclareMathOperator{\ext}{ext}
@@ -188,9 +209,17 @@
 \DeclareMathOperator{\argmin}{argmin}
 \DeclareMathOperator{\argmax}{argmax}
 \DeclareMathOperator{\epi}{epi}
+\DeclareMathOperator{\conv}{conv}
+\DeclareMathOperator{\stab}{stab}
+\DeclareMathOperator{\TSP}{TSP}
+\DeclareMathOperator{\dist}{dist}
 \DeclareMathOperator{\aff}{aff}
-
-\newcommand{\hor}{\rotatebox[origin=c]{90}{$\vert$}}
+\DeclareMathOperator{\proj}{proj}
+\DeclareMathOperator{\cone}{cone}
+\DeclareMathOperator{\lin}{lin}
+\DeclareMathOperator{\rec}{rec}
+\DeclareMathOperator{\BCC}{BCC}
+\DeclareMathOperator{\cost}{Cost}
 
 \DeclarePairedDelimiter\abs{\lvert}{\rvert}%
 \DeclarePairedDelimiter\norm{\lVert}{\rVert}%
@@ -251,6 +280,34 @@
 \newcommand{\bY}{\mathbb{Y}}
 \newcommand{\bZ}{\mathbb{Z}}
 
+% fractal letters
+\newcommand{\fA}{\mathfrak{A}}
+\newcommand{\fB}{\mathfrak{B}}
+\newcommand{\fC}{\mathfrak{C}}
+\newcommand{\fD}{\mathfrak{D}}
+\newcommand{\fE}{\mathfrak{E}}
+\newcommand{\fF}{\mathfrak{F}}
+\newcommand{\fG}{\mathfrak{G}}
+\newcommand{\fH}{\mathfrak{H}}
+\newcommand{\fI}{\mathfrak{I}}
+\newcommand{\fJ}{\mathfrak{J}}
+\newcommand{\fK}{\mathfrak{K}}
+\newcommand{\fL}{\mathfrak{L}}
+\newcommand{\fM}{\mathfrak{M}}
+\newcommand{\fN}{\mathfrak{N}}
+\newcommand{\fO}{\mathfrak{O}}
+\newcommand{\fP}{\mathfrak{P}}
+\newcommand{\fQ}{\mathfrak{Q}}
+\newcommand{\fR}{\mathfrak{R}}
+\newcommand{\fS}{\mathfrak{S}}
+\newcommand{\fT}{\mathfrak{T}}
+\newcommand{\fU}{\mathfrak{U}}
+\newcommand{\fV}{\mathfrak{V}}
+\newcommand{\fW}{\mathfrak{W}}
+\newcommand{\fX}{\mathfrak{X}}
+\newcommand{\fY}{\mathfrak{Y}}
+\newcommand{\fZ}{\mathfrak{Z}}
+
 % calligraphic letters
 \newcommand{\cA}{\mathcal{A}}
 \newcommand{\cB}{\mathcal{B}}
@@ -263,14 +320,14 @@
 \newcommand{\cI}{\mathcal{I}}
 \newcommand{\cJ}{\mathcal{J}}
 \newcommand{\cK}{\mathcal{K}}
-\newcommand{\cL}{\mathcal{L}}
+\renewcommand{\cL}{\mathcal{L}}
 \newcommand{\cM}{\mathcal{M}}
 \newcommand{\cN}{\mathcal{N}}
 \newcommand{\cO}{\mathcal{O}}
-\newcommand{\cP}{\mathcal{P}}
+\renewcommand{\cP}{\mathcal{P}}
 \newcommand{\cQ}{\mathcal{Q}}
 \newcommand{\cR}{\mathcal{R}}
-\newcommand{\cS}{\mathcal{S}}
+\renewcommand{\cS}{\mathcal{S}}
 \newcommand{\cT}{\mathcal{T}}
 \newcommand{\cU}{\mathcal{U}}
 \newcommand{\cV}{\mathcal{V}}
@@ -306,6 +363,34 @@
 \newcommand{\sX}{\mathscr{X}}
 \newcommand{\sY}{\mathscr{Y}}
 \newcommand{\sZ}{\mathscr{Z}}
+
+% bold letters
+\newcommand{\bfA}{\mathbf{A}}
+\newcommand{\bfB}{\mathbf{B}}
+\newcommand{\bfC}{\mathbf{C}}
+\newcommand{\bfD}{\mathbf{D}}
+\newcommand{\bfE}{\mathbf{E}}
+\newcommand{\bfF}{\mathbf{F}}
+\newcommand{\bfG}{\mathbf{G}}
+\newcommand{\bfH}{\mathbf{H}}
+\newcommand{\bfI}{\mathbf{I}}
+\newcommand{\bfJ}{\mathbf{J}}
+\newcommand{\bfK}{\mathbf{K}}
+\newcommand{\bfL}{\mathbf{L}}
+\newcommand{\bfM}{\mathbf{M}}
+\newcommand{\bfN}{\mathbf{N}}
+\newcommand{\bfO}{\mathbf{O}}
+\newcommand{\bfP}{\mathbf{P}}
+\newcommand{\bfQ}{\mathbf{Q}}
+\newcommand{\bfR}{\mathbf{R}}
+\newcommand{\bfS}{\mathbf{S}}
+\newcommand{\bfT}{\mathbf{T}}
+\newcommand{\bfU}{\mathbf{U}}
+\newcommand{\bfV}{\mathbf{V}}
+\newcommand{\bfW}{\mathbf{W}}
+\newcommand{\bfX}{\mathbf{X}}
+\newcommand{\bfY}{\mathbf{Y}}
+\newcommand{\bfZ}{\mathbf{Z}}
 
 % vector letters
 \newcommand{\vA}{\vec{a}}
@@ -355,12 +440,14 @@
 % \newcommand{\IF}{\text{ if }}
 \newcommand{\IFF}{\text{ if and only if }}
 \newcommand{\OR}{\text{ or }}
-\newcommand{\ST}{\text{ such that }}
+\newcommand{\XOR}{\text{ xor }}
+\newcommand{\ST}{\text{ s.t. }}
 \newcommand{\LHS}{\text{LHS}}
 \newcommand{\RHS}{\text{RHS}}
 \newcommand{\EVEN}{\text{ even }}
 \newcommand{\ODD}{\text{ odd }}
 \newcommand{\SO}{\text{ so }}
+\newcommand{\IS}{\text{ is }}
 \newcommand{\WHERE}{\text{ where }}
 \newcommand{\SINCE}{\text{ since }}
 \newcommand{\QAND}{\quad\text{ and }\quad}
@@ -369,7 +456,8 @@
 \newcommand{\QIF}{\quad\text{ if }\quad}
 \newcommand{\QIFF}{\quad\text{ if and only if }\quad}
 \newcommand{\QOR}{\quad\text{ or }\quad}
-\newcommand{\QST}{\quad\text{ st }\quad}
+\newcommand{\QXOR}{\quad\text{ xor }\quad}
+\newcommand{\QST}{\quad\text{ s.t. }\quad}
 \newcommand{\QLHS}{\quad\text{ LHS }\quad}
 \newcommand{\QRHS}{\quad\text{ RHS }\quad}
 \newcommand{\QEVEN}{\quad\text{ even }\quad}
@@ -377,5 +465,12 @@
 \newcommand{\QWHERE}{\quad\text{ where }\quad}
 \newcommand{\QSINCE}{\quad\text{ since }\quad}
 \newcommand{\QSO}{\quad\text{ so }\quad}
+\newcommand{\QIS}{\quad\text{ is }\quad}
 
 \newcommand{\db}{\text{d}}
+\newcommand{\DP}{\text{dp}}
+
+\makeatletter
+\newcommand{\vast}{\bBigg@{4}}
+\newcommand{\Vast}{\bBigg@{5}}
+\makeatother

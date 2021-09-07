@@ -22,6 +22,7 @@
 \usepackage[noend]{algcompatible}
 \usepackage[noend]{algpseudocode}
 \usepackage{calc}
+\usepackage[basic]{complexity}
 
 \makeatletter
 % code borrowed from Andrew Stacey; See
@@ -190,10 +191,18 @@
 \DeclareMathOperator{\nullity}{nullity}
 \DeclareMathOperator{\lcm}{lcm}
 \DeclareMathOperator{\GL}{GL}
-\DeclareMathOperator{\OPT}{OPT}
-\DeclareMathOperator{\poly}{poly}
-\DeclareMathOperator{\SC}{SC}
+\DeclareMathOperator{\OPT}{\ensuremath{\mathsf{OPT}}}
+\DeclareMathOperator{\vbl}{vbl}
+\DeclareMathOperator{\poa}{PoA}
+\DeclareMathOperator{\pos}{PoS}
 \DeclareMathOperator{\LP}{LP}
+\DeclareMathOperator{\SDP}{SDP}
+\DeclareMathOperator{\Geo}{Geo}
+\DeclareMathOperator{\Bin}{Bin}
+\DeclareMathOperator{\Ber}{Ber}
+\DeclareMathOperator{\Poiss}{Poiss}
+\DeclareMathOperator{\NB}{NB}
+\DeclareMathOperator{\size}{size}
 \DeclareMathOperator{\tmp}{tmp}
 \DeclareMathOperator{\ev}{ev}
 \DeclareMathOperator{\cl}{cl}
@@ -313,14 +322,14 @@
 \newcommand{\cI}{\mathcal{I}}
 \newcommand{\cJ}{\mathcal{J}}
 \newcommand{\cK}{\mathcal{K}}
-\newcommand{\cL}{\mathcal{L}}
+\renewcommand{\cL}{\mathcal{L}}
 \newcommand{\cM}{\mathcal{M}}
 \newcommand{\cN}{\mathcal{N}}
 \newcommand{\cO}{\mathcal{O}}
-\newcommand{\cP}{\mathcal{P}}
+\renewcommand{\cP}{\mathcal{P}}
 \newcommand{\cQ}{\mathcal{Q}}
 \newcommand{\cR}{\mathcal{R}}
-\newcommand{\cS}{\mathcal{S}}
+\renewcommand{\cS}{\mathcal{S}}
 \newcommand{\cT}{\mathcal{T}}
 \newcommand{\cU}{\mathcal{U}}
 \newcommand{\cV}{\mathcal{V}}
@@ -356,6 +365,34 @@
 \newcommand{\sX}{\mathscr{X}}
 \newcommand{\sY}{\mathscr{Y}}
 \newcommand{\sZ}{\mathscr{Z}}
+
+% bold letters
+\newcommand{\bfA}{\mathbf{A}}
+\newcommand{\bfB}{\mathbf{B}}
+\newcommand{\bfC}{\mathbf{C}}
+\newcommand{\bfD}{\mathbf{D}}
+\newcommand{\bfE}{\mathbf{E}}
+\newcommand{\bfF}{\mathbf{F}}
+\newcommand{\bfG}{\mathbf{G}}
+\newcommand{\bfH}{\mathbf{H}}
+\newcommand{\bfI}{\mathbf{I}}
+\newcommand{\bfJ}{\mathbf{J}}
+\newcommand{\bfK}{\mathbf{K}}
+\newcommand{\bfL}{\mathbf{L}}
+\newcommand{\bfM}{\mathbf{M}}
+\newcommand{\bfN}{\mathbf{N}}
+\newcommand{\bfO}{\mathbf{O}}
+\newcommand{\bfP}{\mathbf{P}}
+\newcommand{\bfQ}{\mathbf{Q}}
+\newcommand{\bfR}{\mathbf{R}}
+\newcommand{\bfS}{\mathbf{S}}
+\newcommand{\bfT}{\mathbf{T}}
+\newcommand{\bfU}{\mathbf{U}}
+\newcommand{\bfV}{\mathbf{V}}
+\newcommand{\bfW}{\mathbf{W}}
+\newcommand{\bfX}{\mathbf{X}}
+\newcommand{\bfY}{\mathbf{Y}}
+\newcommand{\bfZ}{\mathbf{Z}}
 
 % vector letters
 \newcommand{\vA}{\vec{a}}
@@ -406,7 +443,7 @@
 \newcommand{\IFF}{\text{ if and only if }}
 \newcommand{\OR}{\text{ or }}
 \newcommand{\XOR}{\text{ xor }}
-\newcommand{\ST}{\text{ such that }}
+\newcommand{\ST}{\text{ s.t. }}
 \newcommand{\LHS}{\text{LHS}}
 \newcommand{\RHS}{\text{RHS}}
 \newcommand{\EVEN}{\text{ even }}
@@ -422,7 +459,7 @@
 \newcommand{\QIFF}{\quad\text{ if and only if }\quad}
 \newcommand{\QOR}{\quad\text{ or }\quad}
 \newcommand{\QXOR}{\quad\text{ xor }\quad}
-\newcommand{\QST}{\quad\text{ st }\quad}
+\newcommand{\QST}{\quad\text{ s.t. }\quad}
 \newcommand{\QLHS}{\quad\text{ LHS }\quad}
 \newcommand{\QRHS}{\quad\text{ RHS }\quad}
 \newcommand{\QEVEN}{\quad\text{ even }\quad}
@@ -433,6 +470,7 @@
 \newcommand{\QIS}{\quad\text{ is }\quad}
 
 \newcommand{\db}{\text{d}}
+\newcommand{\DP}{\text{dp}}
 
 \makeatletter
 \newcommand{\vast}{\bBigg@{4}}
