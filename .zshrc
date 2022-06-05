@@ -76,7 +76,7 @@ source $ZSH/oh-my-zsh.sh
 
 
 # Updating PATH
-PATH="/home/riley/Clones/llvm-project/build/bin:/home/riley/go/bin:/usr/local/go/bin:/home/riley/.cargo/bin:/usr/local/texlive/2020/bin/x86_64-linux:/usr/local/MATLAB/R2020b/bin:$PATH"
+PATH="/home/riley/.config/coc/extensions/coc-clangd-data/install/13.0.0/clangd_13.0.0/bin:/home/riley/Clones/llvm-project/build/bin:/home/riley/go/bin:/usr/local/go/bin:/home/riley/.cargo/bin:/usr/local/texlive/2020/bin/x86_64-linux:/usr/local/MATLAB/R2020b/bin:$PATH"
 
 # latex PATH info
 
@@ -98,6 +98,10 @@ else
   export EDITOR='nvim'
 fi
 
+export Projects=/home/riley/Projects
+export School=/home/riley/Waterloo
+export Work=/home/riley/Work
+
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
@@ -114,8 +118,10 @@ alias v=nvim
 alias web="aws s3 sync /home/riley/rjackson2000.com s3://rjackson2000.com"
 alias psudo='sudo env PATH="$PATH"'
 alias ff='fzf -q ""'
-# alias ls='exa'
-alias python='python3.8'
+alias t=tmux
+alias g=gdb
+alias p='python3.8'
+alias sl=ls
 
 # zsh-bd
 . $HOME/.zsh/plugins/bd/bd.zsh
@@ -135,5 +141,28 @@ cdf() {
 
 # Shell init stuff
 
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
 neofetch --logo --ascii_distro ubuntu_small
+# awk -v term_cols="${width:-$(tput cols || echo 80)}" 'BEGIN{
+#     s="/\\";
+#     for (colnum = 0; colnum<term_cols; colnum++) {
+#         r = 255-(colnum*255/term_cols);
+#         g = (colnum*510/term_cols);
+#         b = (colnum*255/term_cols);
+#         if (g>255) g = 510-g;
+#         printf "\033[48;2;%d;%d;%dm", r,g,b;
+#         printf "\033[38;2;%d;%d;%dm", 255-r,255-g,255-b;
+#         printf "%s\033[0m", substr(s,colnum%2+1,1);
+#     }
+#     printf "\n";
+# }'
 exa
+
+PATH="/home/riley/perl5/bin${PATH:+:${PATH}}"; export PATH;
+PERL5LIB="/home/riley/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+PERL_LOCAL_LIB_ROOT="/home/riley/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+PERL_MB_OPT="--install_base \"/home/riley/perl5\""; export PERL_MB_OPT;
+PERL_MM_OPT="INSTALL_BASE=/home/riley/perl5"; export PERL_MM_OPT;

@@ -26,8 +26,8 @@ Plug 'majutsushi/tagbar'
 " Plug 'ludovicchabant/vim-gutentags'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
+" Plug 'SirVer/ultisnips'
+" Plug 'honza/vim-snippets'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
@@ -42,6 +42,9 @@ Plug 'hdima/python-syntax', {'for': 'python'}
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries', 'for': 'go' }
 
+Plug 'p00f/godbolt.nvim'
+Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh' }
+
 call plug#end()
 
 ""     _____ ____  _   _ ______ _____ _____ 
@@ -54,7 +57,7 @@ call plug#end()
 ""config
 
 filetype indent plugin on
-syntax enable 
+syntax enable
 
 set shortmess+=c
 
@@ -194,6 +197,9 @@ nnoremap cdh :lcd ~<CR>
 "" Website
 " nnoremap <leader>w :term<CR>iweb<CR><C-\><C-n>:bd!<CR> " This is broken
 
+"" Godbolt
+nnoremap <leader>gg :Godbolt<CR><CR>
+
 "" Change split size
 nnoremap <Up>    :resize +2<CR>
 nnoremap <Down>  :resize -2<CR>
@@ -320,11 +326,16 @@ let g:go_doc_keywordprg_enabled = 0
 let g:lsp_cxx_hl_use_text_props = 1
 
 "" coc.nvim
-let g:coc_global_extensions = ['coc-json', 'coc-git', 'coc-vimlsp', 'coc-prettier', 'coc-eslint', 'coc-java', 'coc-omnisharp', 'coc-go', 'coc-python', 'coc-sh', 'coc-texlab', 'coc-clangd', 'coc-css', 'coc-xml', 'coc-cmake', 'coc-yaml', 'coc-phpactor', 'coc-snippets', 'coc-pairs']
+let g:coc_global_extensions = ['coc-json', 'coc-git', 'coc-vimlsp', 'coc-prettier', 'coc-eslint', 'coc-java', 'coc-omnisharp', 'coc-go', 'coc-python', 'coc-sh', 'coc-texlab', 'coc-css', 'coc-xml', 'coc-cmake', 'coc-yaml', 'coc-phpactor', 'coc-pairs']
 "" Use tab to complete
 " Use tab to trigger completion and navigate.
 inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : <SID>check_back_space() ? "\<TAB>" : coc#refresh()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
 
 " ctrl-space to trigger completion.
 inoremap <silent><expr> <c-space> coc#refresh()
@@ -471,7 +482,7 @@ set path+=/usr/include/c++/9/
 command! FixWhitespace :%s/\s\+$//e
 
 let g:zsh_terminal_window = -1
-ret g:zsh_terminal_job_id = -1
+let g:zsh_terminal_job_id = -1
 
 function! ZshTerminalOpen()
   if !bufexists("Terminal 1")
